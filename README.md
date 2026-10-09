@@ -13,3 +13,6 @@ https://youtube.com/shorts/U-ChaqJTjXE?feature=share
 - Android Nativo
 - Java
 
+
+### Autores
+Trabalho feito por: Renato Ferreira Martins e Igor Damascena de Amorim
