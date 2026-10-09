@@ -23,8 +23,23 @@ public class ListaActivity extends AppCompatActivity implements Adapter.OnItemCl
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
+        String filtroCampus = getIntent().getStringExtra("FiltroCampus");
+        String filtroGrau = getIntent().getStringExtra("FiltroGrau");
+        boolean somenteNoturno = getIntent().getBooleanExtra("FiltroNoturno", false);
 
-        lista = CursosData.getCursos();
+        lista = new ArrayList<>();
+        for (Curso c : CursosData.getCursos()) {
+            if (filtroCampus != null && !c.getCampus().equals(filtroCampus)) continue;
+            if (filtroGrau != null && !c.getGrau().equals(filtroGrau)) continue;
+            if (somenteNoturno && !c.getTurno().equals("Noturno")) continue;
+            lista.add(c);
+        }
+
+        if (lista.isEmpty()) {
+            Toast.makeText(this, "Nenhum curso encontrado com esses filtros.", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -44,7 +59,7 @@ public class ListaActivity extends AppCompatActivity implements Adapter.OnItemCl
         intent.putExtra("Turno", f.getTurno());
         intent.putExtra("Descricao", f.getDescricao());
         intent.putExtra("Site", f.getSite());
-        intent.putExtra("imagem", f.getImagem());
+        intent.putExtra("Imagem", f.getImagem());
         startActivity(intent);
     }
 
